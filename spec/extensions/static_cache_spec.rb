@@ -326,6 +326,14 @@ describe "Sequel::Plugins::StaticCache" do
       a.last.must_be_same_as(@c2)
     end
 
+    it "should have each returning cache objects enumerator" do
+      a = []
+      @c.each.each{|o| a << o}
+      a = a.sort_by{|o| o.id}
+      a.first.must_be_same_as(@c1)
+      a.last.must_be_same_as(@c2)
+    end
+
     it "should have other enumerable methods work yield cached objects" do
       a = @c.sort_by{|o| o.id}
       a.first.must_be_same_as(@c1)

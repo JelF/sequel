@@ -116,8 +116,10 @@ module Sequel
         def each(&block)
           if @static_cache_frozen
             @all.each(&block)
-          else
+          elsif block
             @all.each{|o| yield(static_cache_object(o))}
+          else
+            @all.map{|o| static_cache_object(o)}.each
           end
         end
 
